@@ -8,6 +8,7 @@ use \LINEUtils\ImageMessageParser;
 use \LINEUtils\LocationMessageParser;
 use \LINEUtils\AudioMessageParser;
 use \LINEUtils\VideoMessageParser;
+use \LINE\LINEBot\Event\BaseEvent;
 use \LINE\LINEBot\Event\MessageEvent;
 use \LINE\LINEBot\Event\MessageEvent\TextMessage;
 use \LINE\LINEBot\Event\MessageEvent\StickerMessage;
@@ -18,7 +19,7 @@ use \LINE\LINEBot\Event\MessageEvent\VideoMessage;
 
 class MessageAdapter
 {
-    public function __construct(MessageEvent $message)
+    public function __construct(BaseEvent $message)
     {
         $this->message = $message;
     }
@@ -26,24 +27,26 @@ class MessageAdapter
     public function getMessage()
     {
         $event = $this->message;
-        if ($event instanceof TextMessage) {
-            $msg = TextMessageParser($event);
-            return $msg->getMessage();
-        } elseif ($event instanceof StickerMessage) {
-            $msg = StickerMessageParser($event);
-            return $msg->getMessage();
-        } elseif ($event instanceof LocationMessage) {
-            $msg = LocationMessageParser($event);
-            return $msg->getMessage();
-        } elseif ($event instanceof ImageMessage) {
-            $msg = ImageMessageParser($event);
-            return $msg->getMessage();
-        } elseif ($event instanceof AudioMessage) {
-            $msg = AudioMessageParser($event);
-            return $msg->getMessage();
-        } elseif ($event instanceof VideoMessage) {
-            $msg = VideoMessageParser($event);
-            return $msg->getMessage();
+        if ($event instanceof MessageEvent) {
+            if ($event instanceof TextMessage) {
+                $msg = new TextMessageParser($event);
+                return $msg->getMessage();
+            } elseif ($event instanceof StickerMessage) {
+                $msg = new StickerMessageParser($event);
+                return $msg->getMessage();
+            } elseif ($event instanceof LocationMessage) {
+                $msg = new LocationMessageParser($event);
+                return $msg->getMessage();
+            } elseif ($event instanceof ImageMessage) {
+                $msg = new ImageMessageParser($event);
+                return $msg->getMessage();
+            } elseif ($event instanceof AudioMessage) {
+                $msg = new AudioMessageParser($event);
+                return $msg->getMessage();
+            } elseif ($event instanceof VideoMessage) {
+                $msg = new VideoMessageParser($event);
+                return $msg->getMessage();
+            }
         }
     }
 }
