@@ -1,0 +1,25 @@
+{
+    "name": "prakashdivyy/line-bot-util",
+    "description": "LINE Bot utility",
+    "keywords": ["utility"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Prakash Divy",
+            "email": "prakashdivyy@gmail.com"
+        }
+    ],
+    "type": "project",
+    "require": {
+		"php": ">=5.4",
+        "linecorp/line-bot-sdk": "^1.5"
+    },
+	"require-dev": {
+		"phpunit/phpunit": "5.2.*"
+    },
+	"autoload": {
+        "psr-4": {
+            "LINEUtils\\": "src/"
+        }
+    }
+}
